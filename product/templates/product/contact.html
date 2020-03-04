@@ -1,6 +1,6 @@
 {% extends 'product/base.html' %}
 {% block content %}
-<div class="contentspacer"></div> 
+<div class="contentspacer"></div>
 	<section class="cont-pagecontent">
 		<div class="contact-infos">
 			<div class="container">
@@ -52,7 +52,7 @@
 						            </div>
 						            <div class="cont__info__txt">
 						                <h3>Give us a call</h3>
-						                <p>{{ about.contact1 }}{% if about.contact2 %}, {{ about.contact2 }}{% endif %}{% if about.contact3 %}{{about.contact3}}{% endif %}</p>
+						                <p>{{ about.contact1 }}{% if about.contact2 %}, {{ about.contact2 }}{% endif %}{% if about.contact3 %}, {{about.contact3}}{% endif %}</p>
 						            </div>
 						        </div>
 						        <div class="info__lst__holder">
@@ -72,6 +72,6 @@
 					</div>
 				</div>
 			</div>
-		</div>		
+		</div>
 	</section>
 	{% endblock %}

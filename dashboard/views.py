@@ -587,7 +587,7 @@ class AboutCreate(LoginRequiredMixin, PermissionRequiredMixin, CreateView):
     form_class = AboutForm
 
     def get_success_url(self):
-        return reverse('dashboard:about-list')
+        return reverse('dashboard:dashboard')
 
 
 class AboutUpdate(LoginRequiredMixin, PermissionRequiredMixin, UpdateView):
