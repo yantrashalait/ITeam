@@ -143,7 +143,7 @@
                                                 </li>
                                                 <li class="nav-item"><a href="{% url 'dashboard:product-list' %}" class="nav-link">Products</a>
                                                 </li>
-                                                <li class="nav-item">{% if about %}<a href="{% url 'dashboard:about-update' about.pk %}" class="nav-link">{% else %}<a href="{% url 'dashboard:about-create' about.pk %}" class="nav-link">{% endif %}About ITeam</a>
+                                                <li class="nav-item">{% if about %}<a href="{% url 'dashboard:about-update' about.pk %}" class="nav-link">{% else %}<a href="{% url 'dashboard:about-create' %}" class="nav-link">{% endif %}About ITeam</a>
                                                 </li>
                                             </ul>
                                         </div>
@@ -261,7 +261,7 @@
                                         </li>
                                         <li><a data-toggle="collapse" data-target="#demolibra" href="{% url 'dashboard:specification-list' %}">Specifications <span class="admin-project-icon edu-icon edu-down-arrow"></span></a>
                                             <ul id="demolibra" class="collapse dropdown-header-top">
-                                                <li><a href="{% url 'dashboard:specification-list' %}">All Specifications</a>
+                                                <li><a href="{% url 'dashboard:type-list' %}">All Specifications</a>
                                                 </li>
                                                 <li><a href="{% url 'dashboard:type-create' %}">Add Specification</a>
                                                 </li>
