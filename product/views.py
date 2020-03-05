@@ -119,9 +119,11 @@ class ProductList(ListView):
     # def get_queryset(self):
     #     return Product.objects.all()
 
-    # def get_context_data(self,**kwargs):
-    #     context = super(ProductList,self).get_context_data(**kwargs)
-    #     return context
+    def get_context_data(self,**kwargs):
+        context = super(ProductList,self).get_context_data(**kwargs)
+        context['types'] = Type.objects.all()
+        context['brands'] = Brand.objects.all()
+        return context
 
 
 class ProductDetail(DetailView):
@@ -221,7 +223,64 @@ class CategoryListView(ListView):
     paginate_by = 20
 
     def get_queryset(self, *args, **kwargs):
+        brands = self.request.GET.getlist('brands')
+        types = self.request.GET.getlist('types')
+        min_price = self.request.GET.get('min_price')
+        max_price = self.request.GET.get('max_price')
+        brand_ids = []
+        type_ids = []
+        for brand_id in brands:
+            brand_ids.append(int(brand_id))
+        for type_id in types:
+            type_ids.append(int(type_id))
+        try:
+            if min_price.isdigit():
+                min_price = int(min_price)
+            else:
+                min_price = None
+        except:
+            min_price = None
+        try:
+            if max_price.isdigit():
+                max_price = int(max_price)
+            else:
+                max_price = None
+        except:
+            max_price = None
+
+        if brand_ids and type_ids and min_price and max_price:
+            return Product.objects.filter(brand_id__in=brand_ids, product_type_id__in=type_ids, new_price__range=(min_price, max_price), category_id=self.kwargs.get("pk"), visibility=True)
+        elif brand_ids and min_price and max_price:
+            return Product.objects.filter(brand_id__in=brand_ids, new_price__range=(min_price, max_price), category_id=self.kwargs.get("pk"), visibility=True)
+        elif brand_ids and type_ids:
+            return Product.objects.filter(brand_id__in=brand_ids, product_type_id__in=type_ids, category_id=self.kwargs.get("pk"), visibility=True)
+        elif brand_ids and min_price:
+            return Product.objects.filter(brand_id__in=brand_ids, new_price__gte=min_price, category_id=self.kwargs.get("pk"), visibility=True)
+        elif brand_ids and max_price:
+            return Product.objects.filter(brand_id__in=brand_ids, new_price__lte=max_price, category_id=self.kwargs.get("pk"), visibility=True)
+        elif type_ids and min_price and max_price:
+            return Product.objects.filter(product_type_id__in=type_ids, new_price__range=(min_price, max_price), category_id=self.kwargs.get("pk"), visibility=True)
+        elif type_ids and min_price:
+            return Product.objects.filter(product_type_id__in=type_ids, new_price__gte=min_price, category_id=self.kwargs.get("pk"), visibility=True)
+        elif type_ids and max_price:
+            return Product.objects.filter(product_type_id__in=type_ids, new_price__lte=max_price, category_id=self.kwargs.get("pk"), visibility=True)
+        elif min_price and max_price:
+            return Product.objects.filter(new_price__range=(min_price, max_price), category_id=self.kwargs.get("pk"), visibility=True)
+        elif brand_ids:
+            return Product.objects.filter(brand_id__in=brand_ids, category_id=self.kwargs.get("pk"), visibility=True)
+        elif type_ids:
+            return Product.objects.filter(product_type_id__in=type_ids, category_id=self.kwargs.get("pk"), visibility=True)
+        elif min_price:
+            return Product.objects.filter(new_price__gte=min_price, category_id=self.kwargs.get("pk"), visibility=True)
+        elif max_price:
+            return Product.objects.filter(new_price__lte=max_price, category_id=self.kwargs.get("pk"), visibility=True)
         return Product.objects.filter(category_id=self.kwargs.get("pk"), visibility=True)
+
+    def get_context_data(self,**kwargs):
+        context = super(CategoryListView,self).get_context_data(**kwargs)
+        context['types'] = Type.objects.all()
+        context['brands'] = Brand.objects.all()
+        return context
 
 
 class BrandListView(ListView):
@@ -231,7 +290,47 @@ class BrandListView(ListView):
     paginate_by = 20
 
     def get_queryset(self, *args, **kwargs):
+        types = self.request.GET.getlist('types')
+        min_price = self.request.GET.get('min_price')
+        max_price = self.request.GET.get('max_price')
+        type_ids = []
+        for type_id in types:
+            type_ids.append(int(type_id))
+        try:
+            if min_price.isdigit():
+                min_price = int(min_price)
+            else:
+                min_price = None
+        except:
+            min_price = None
+        try:
+            if max_price.isdigit():
+                max_price = int(max_price)
+            else:
+                max_price = None
+        except:
+            max_price = None
+
+        if type_ids and min_price and max_price:
+            return Product.objects.filter(product_type_id__in=type_ids, new_price__range=(min_price, max_price), brand_id=self.kwargs.get("pk"), visibility=True)
+        elif type_ids and min_price:
+            return Product.objects.filter(product_type_id__in=type_ids, new_price__gte=min_price, brand_id=self.kwargs.get("pk"), visibility=True)
+        elif type_ids and max_price:
+            return Product.objects.filter(product_type_id__in=type_ids, new_price__lte=max_price, brand_id=self.kwargs.get("pk"), visibility=True)
+        elif min_price and max_price:
+            return Product.objects.filter(new_price__range=(min_price, max_price), brand_id=self.kwargs.get("pk"), visibility=True)
+        elif type_ids:
+            return Product.objects.filter(product_type_id__in=type_ids, brand_id=self.kwargs.get("pk"), visibility=True)
+        elif min_price:
+            return Product.objects.filter(new_price__gte=min_price, brand_id=self.kwargs.get("pk"), visibility=True)
+        elif max_price:
+            return Product.objects.filter(new_price__lte=max_price, brand_id=self.kwargs.get("pk"), visibility=True)
         return Product.objects.filter(brand_id=self.kwargs.get("pk"), visibility=True)
+
+    def get_context_data(self,**kwargs):
+        context = super(BrandListView,self).get_context_data(**kwargs)
+        context['types'] = Type.objects.all()
+        return context
 
 
 class TypeListView(ListView):
@@ -241,7 +340,47 @@ class TypeListView(ListView):
     paginate_by = 20
 
     def get_queryset(self, *args, **kwargs):
+        brands = self.request.GET.getlist('brands')
+        min_price = self.request.GET.get('min_price')
+        max_price = self.request.GET.get('max_price')
+        brand_ids = []
+        for brand_id in brands:
+            brand_ids.append(int(brand_id))
+        try:
+            if min_price.isdigit():
+                min_price = int(min_price)
+            else:
+                min_price = None
+        except:
+            min_price = None
+        try:
+            if max_price.isdigit():
+                max_price = int(max_price)
+            else:
+                max_price = None
+        except:
+            max_price = None
+
+        if brand_ids and min_price and max_price:
+            return Product.objects.filter(brand_id__in=brand_ids, new_price__range=(min_price, max_price), product_type_id=self.kwargs.get("pk"), visibility=True)
+        elif brand_ids and min_price:
+            return Product.objects.filter(brand_id__in=brand_ids, new_price__gte=min_price, product_type_id=self.kwargs.get("pk"), visibility=True)
+        elif brand_ids and max_price:
+            return Product.objects.filter(brand_id__in=brand_ids, new_price__lte=max_price, product_type_id=self.kwargs.get("pk"), visibility=True)
+        elif min_price and max_price:
+            return Product.objects.filter(new_price__range=(min_price, max_price), product_type_id=self.kwargs.get("pk"), visibility=True)
+        elif brand_ids:
+            return Product.objects.filter(brand_id__in=brand_ids, product_type_id=self.kwargs.get("pk"), visibility=True)
+        elif min_price:
+            return Product.objects.filter(new_price__gte=min_price, product_type_id=self.kwargs.get("pk"), visibility=True)
+        elif max_price:
+            return Product.objects.filter(new_price__lte=max_price, product_type_id=self.kwargs.get("pk"), visibility=True)
         return Product.objects.filter(product_type_id=self.kwargs.get("pk"), visibility=True)
+
+    def get_context_data(self,**kwargs):
+        context = super(TypeListView,self).get_context_data(**kwargs)
+        context['brands'] = Brand.objects.all()
+        return context
 
 
 class SuperDealsListView(ListView):
@@ -251,7 +390,64 @@ class SuperDealsListView(ListView):
     paginate_by = 20
 
     def get_queryset(self, *args, **kwargs):
+        brands = self.request.GET.getlist('brands')
+        types = self.request.GET.getlist('types')
+        min_price = self.request.GET.get('min_price')
+        max_price = self.request.GET.get('max_price')
+        brand_ids = []
+        type_ids = []
+        for brand_id in brands:
+            brand_ids.append(int(brand_id))
+        for type_id in types:
+            type_ids.append(int(type_id))
+        try:
+            if min_price.isdigit():
+                min_price = int(min_price)
+            else:
+                min_price = None
+        except:
+            min_price = None
+        try:
+            if max_price.isdigit():
+                max_price = int(max_price)
+            else:
+                max_price = None
+        except:
+            max_price = None
+
+        if brand_ids and type_ids and min_price and max_price:
+            return Product.objects.filter(brand_id__in=brand_ids, product_type_id__in=type_ids, new_price__range=(min_price, max_price), super_deals=True, visibility=True)
+        elif brand_ids and min_price and max_price:
+            return Product.objects.filter(brand_id__in=brand_ids, new_price__range=(min_price, max_price), super_deals=True, visibility=True)
+        elif brand_ids and type_ids:
+            return Product.objects.filter(brand_id__in=brand_ids, product_type_id__in=type_ids, super_deals=True, visibility=True)
+        elif brand_ids and min_price:
+            return Product.objects.filter(brand_id__in=brand_ids, new_price__gte=min_price, super_deals=True, visibility=True)
+        elif brand_ids and max_price:
+            return Product.objects.filter(brand_id__in=brand_ids, new_price__lte=max_price, super_deals=True, visibility=True)
+        elif type_ids and min_price and max_price:
+            return Product.objects.filter(product_type_id__in=type_ids, new_price__range=(min_price, max_price), super_deals=True, visibility=True)
+        elif type_ids and min_price:
+            return Product.objects.filter(product_type_id__in=type_ids, new_price__gte=min_price, super_deals=True, visibility=True)
+        elif type_ids and max_price:
+            return Product.objects.filter(product_type_id__in=type_ids, new_price__lte=max_price, super_deals=True, visibility=True)
+        elif min_price and max_price:
+            return Product.objects.filter(new_price__range=(min_price, max_price), super_deals=True, visibility=True)
+        elif brand_ids:
+            return Product.objects.filter(brand_id__in=brand_ids, super_deals=True, visibility=True)
+        elif type_ids:
+            return Product.objects.filter(product_type_id__in=type_ids, super_deals=True, visibility=True)
+        elif min_price:
+            return Product.objects.filter(new_price__gte=min_price, super_deals=True, visibility=True)
+        elif max_price:
+            return Product.objects.filter(new_price__lte=max_price, super_deals=True, visibility=True)
         return Product.objects.filter(super_deals=True, visibility=True)
+
+    def get_context_data(self,**kwargs):
+        context = super(SuperDealsListView,self).get_context_data(**kwargs)
+        context['types'] = Type.objects.all()
+        context['brands'] = Brand.objects.all()
+        return context
 
 
 class OfferListView(ListView):
@@ -261,7 +457,64 @@ class OfferListView(ListView):
     paginate_by = 20
 
     def get_queryset(self, *args, **kwargs):
+        brands = self.request.GET.getlist('brands')
+        types = self.request.GET.getlist('types')
+        min_price = self.request.GET.get('min_price')
+        max_price = self.request.GET.get('max_price')
+        brand_ids = []
+        type_ids = []
+        for brand_id in brands:
+            brand_ids.append(int(brand_id))
+        for type_id in types:
+            type_ids.append(int(type_id))
+        try:
+            if min_price.isdigit():
+                min_price = int(min_price)
+            else:
+                min_price = None
+        except:
+            min_price = None
+        try:
+            if max_price.isdigit():
+                max_price = int(max_price)
+            else:
+                max_price = None
+        except:
+            max_price = None
+
+        if brand_ids and type_ids and min_price and max_price:
+            return Product.objects.filter(brand_id__in=brand_ids, product_type_id__in=type_ids, new_price__range=(min_price, max_price), offer=True, visibility=True)
+        elif brand_ids and min_price and max_price:
+            return Product.objects.filter(brand_id__in=brand_ids, new_price__range=(min_price, max_price), offer=True, visibility=True)
+        elif brand_ids and type_ids:
+            return Product.objects.filter(brand_id__in=brand_ids, product_type_id__in=type_ids, offer=True, visibility=True)
+        elif brand_ids and min_price:
+            return Product.objects.filter(brand_id__in=brand_ids, new_price__gte=min_price, offer=True, visibility=True)
+        elif brand_ids and max_price:
+            return Product.objects.filter(brand_id__in=brand_ids, new_price__lte=max_price, offer=True, visibility=True)
+        elif type_ids and min_price and max_price:
+            return Product.objects.filter(product_type_id__in=type_ids, new_price__range=(min_price, max_price), offer=True, visibility=True)
+        elif type_ids and min_price:
+            return Product.objects.filter(product_type_id__in=type_ids, new_price__gte=min_price, offer=True, visibility=True)
+        elif type_ids and max_price:
+            return Product.objects.filter(product_type_id__in=type_ids, new_price__lte=max_price, offer=True, visibility=True)
+        elif min_price and max_price:
+            return Product.objects.filter(new_price__range=(min_price, max_price), offer=True, visibility=True)
+        elif brand_ids:
+            return Product.objects.filter(brand_id__in=brand_ids, offer=True, visibility=True)
+        elif type_ids:
+            return Product.objects.filter(product_type_id__in=type_ids, offer=True, visibility=True)
+        elif min_price:
+            return Product.objects.filter(new_price__gte=min_price, offer=True, visibility=True)
+        elif max_price:
+            return Product.objects.filter(new_price__lte=max_price, offer=True, visibility=True)
         return Product.objects.filter(offer=True, visibility=True)
+
+    def get_context_data(self,**kwargs):
+        context = super(OfferListView,self).get_context_data(**kwargs)
+        context['types'] = Type.objects.all()
+        context['brands'] = Brand.objects.all()
+        return context
 
 
 class MostViewedListView(ListView):
@@ -271,7 +524,64 @@ class MostViewedListView(ListView):
     paginate_by = 20
 
     def get_queryset(self, *args, **kwargs):
+        brands = self.request.GET.getlist('brands')
+        types = self.request.GET.getlist('types')
+        min_price = self.request.GET.get('min_price')
+        max_price = self.request.GET.get('max_price')
+        brand_ids = []
+        type_ids = []
+        for brand_id in brands:
+            brand_ids.append(int(brand_id))
+        for type_id in types:
+            type_ids.append(int(type_id))
+        try:
+            if min_price.isdigit():
+                min_price = int(min_price)
+            else:
+                min_price = None
+        except:
+            min_price = None
+        try:
+            if max_price.isdigit():
+                max_price = int(max_price)
+            else:
+                max_price = None
+        except:
+            max_price = None
+
+        if brand_ids and type_ids and min_price and max_price:
+            return Product.objects.filter(brand_id__in=brand_ids, product_type_id__in=type_ids, new_price__range=(min_price, max_price), views__gte=10, visibility=True)
+        elif brand_ids and min_price and max_price:
+            return Product.objects.filter(brand_id__in=brand_ids, new_price__range=(min_price, max_price), views__gte=10, visibility=True)
+        elif brand_ids and type_ids:
+            return Product.objects.filter(brand_id__in=brand_ids, product_type_id__in=type_ids, views__gte=10, visibility=True)
+        elif brand_ids and min_price:
+            return Product.objects.filter(brand_id__in=brand_ids, new_price__gte=min_price, views__gte=10, visibility=True)
+        elif brand_ids and max_price:
+            return Product.objects.filter(brand_id__in=brand_ids, new_price__lte=max_price, views__gte=10, visibility=True)
+        elif type_ids and min_price and max_price:
+            return Product.objects.filter(product_type_id__in=type_ids, new_price__range=(min_price, max_price), views__gte=10, visibility=True)
+        elif type_ids and min_price:
+            return Product.objects.filter(product_type_id__in=type_ids, new_price__gte=min_price, views__gte=10, visibility=True)
+        elif type_ids and max_price:
+            return Product.objects.filter(product_type_id__in=type_ids, new_price__lte=max_price, views__gte=10, visibility=True)
+        elif min_price and max_price:
+            return Product.objects.filter(new_price__range=(min_price, max_price), views__gte=10, visibility=True)
+        elif brand_ids:
+            return Product.objects.filter(brand_id__in=brand_ids, views__gte=10, visibility=True)
+        elif type_ids:
+            return Product.objects.filter(product_type_id__in=type_ids, views__gte=10, visibility=True)
+        elif min_price:
+            return Product.objects.filter(new_price__gte=min_price, views__gte=10, visibility=True)
+        elif max_price:
+            return Product.objects.filter(new_price__lte=max_price, views__gte=10, visibility=True)
         return Product.objects.filter(views__gte=10, visibility=True)
+
+    def get_context_data(self,**kwargs):
+        context = super(MostViewedListView,self).get_context_data(**kwargs)
+        context['types'] = Type.objects.all()
+        context['brands'] = Brand.objects.all()
+        return context
 
 
 def search_product(request):

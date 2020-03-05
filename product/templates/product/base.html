@@ -15,7 +15,7 @@
     <link rel="stylesheet" type="text/css" href="{% static 'css/owl.theme.default.css' %}">
     <link rel="stylesheet" type="text/css" href="{% static 'css/font-awesome.css' %}">
     <link rel="stylesheet" type="text/css" href="{% static 'css/cropper.css' %}">
-    
+
 
     <!-- Plugins css -->
     <link rel="stylesheet" href="{% static 'css/plugins.css' %}">
@@ -127,7 +127,7 @@
         <div class="req__item">
             <div class="text-center req__content">
                 <div class="req__item__text__hldr">
-                    <span class="req__text">...order a Product Not Found Here</span><a href="{% url 'product:request-product' %}">Request An Item</a> 
+                    <span class="req__text">...order a Product Not Found Here</span><a href="{% url 'product:request-product' %}">Request An Item</a>
                 </div>
             </div>
         </div>
@@ -142,10 +142,10 @@
                     </div>
                 </div>
             </form>
-        </div>    
+        </div>
         <div class="header-2">
             <div class="container">
-                <div class="header_contnt">                
+                <div class="header_contnt">
                     <!-- responsive toggle main menu -->
                     <div class="resp_tggl_main_menu">
                         <span class="menu_bar"></span>
@@ -164,11 +164,11 @@
                     <div class="header_right">
                         <div class="header_right_left">
                             <div class="hd_rgt_lft_hldr">
-                                
+
                                 <div class="new-cn-inf">
                                     <div class="cnt_infos">
                                         <span class="cnt_infs_lst">
-                                               <i class="fa fa-phone "> </i> Hotline: {{ about.contact1 }}{% if about.contact2 %}, {{ about.contact2 }}{% endif %}{% if about.contact3 %}{{about.contact3}}{% endif %}
+                                               <i class="fa fa-phone "> </i> Hotline: {{ about.contact1 }}{% if about.contact2 %}, {{ about.contact2 }}{% endif %}{% if about.contact3 %}, {{about.contact3}}{% endif %}
                                                </span>
                                         <span class="cnt_infs_lst">
                                                <i class="fa fa-envelope"> </i>Email: {{ about.email }}
@@ -184,7 +184,7 @@
                                     </div>
                                 </div>
                                 <div class="srchfrm_hdr">
-                                    
+
                                         <form method="POST" action="{% url 'product:search-product' %}">
                                             {% csrf_token %}
                                         <div class="input-groups ">
@@ -194,11 +194,11 @@
                                             </div>
                                         </div>
                                         </form>
-                                    
+
                                 </div>
                             </div>
-                        </div>                    
-                        <div class="header_right_prt">                        
+                        </div>
+                        <div class="header_right_prt">
                                     <div class="cart_whis_noti">
                                         <!-- RESPONSIVE SEARCH DIV -->
                                         <div class="resp_srch">
@@ -207,7 +207,7 @@
                                             </span>
                                         </div>
                                         <!-- RESPONSIVE SEARCH DIV -->
-                                        <div class="hd_wishlist shop_itm">                                    
+                                        <div class="hd_wishlist shop_itm">
                                             <div class="clk_for_dropdwn fabclick"></div>
                                             <span class="shop_itm_txt">
                                                 <a href="#">
@@ -286,15 +286,15 @@
                                                     <div class="drp_vew_mritemsbtn">
                                                         <a href="{% url 'product:favourite' request.user.pk %}">View All Items</a>
                                                     </div>
-                                                </div> 
+                                                </div>
                                                 {% else %}
                                                 <p>You need to be logged in to view your Favourites.</p>
                                                 <div class="drp_more_items">
                                                         <div class="drp_vew_mritemsbtn">
                                                             <a href="{% url 'login' %}">Login</a>
                                                         </div>
-                                                    </div> 
-                                                {% endif %}                                               
+                                                    </div>
+                                                {% endif %}
                                             </div>
                                         </div>
 
@@ -343,7 +343,7 @@
                                                         <div class="drp_vew_mritemsbtn">
                                                             <a href="{% url 'login' %}">Login</a>
                                                         </div>
-                                                    </div> 
+                                                    </div>
                                                 {% endif %}
                                             </div>
                                         </div>
@@ -393,7 +393,7 @@
                                                         <div class="drp_vew_mritemsbtn">
                                                             <a href="{% url 'login' %}">Login</a>
                                                         </div>
-                                                    </div> 
+                                                    </div>
                                                 {% endif %}
                                             </div>
                                         </div>
@@ -494,7 +494,7 @@
                                                         <div class="drp_vew_mritemsbtn">
                                                             <a href="{% url 'login' %}">Login</a>
                                                         </div>
-                                                    </div> 
+                                                    </div>
                                                 {% endif %}
                                             </div>
                                         </div>
@@ -635,7 +635,7 @@
                         <div class="newsltter_from">
                             <form action="{% url 'product:subscribe' %}" method="POST" enctype="multipart/form-data">
                                 {% csrf_token %}
-                            
+
                                 <div class="input-groups ">
                                     <input type="text" class="form-control" name="subs" placeholder="Email Address..." required>
                                     <button type="submit" class="nwl_btn">Subscribe</button>
@@ -652,8 +652,12 @@
                     <div class="col-md-5">
                         <div class="foot_general">
                             <div class="footlogo">
-                                <a href="#">
-                                    <img src="{% static 'images/newlogo.png' %}" alt="">
+                                <a href="{% url 'product:index' %}">
+																	{% if about.logo %}
+																			<img src="{{ about.logo.url }}">
+																	{% else %}
+																			<img src="{% static 'images/newlogo.png' %}"></a>
+																	{% endif %}
                                 </a>
                             </div>
                             <div class="cont_info">

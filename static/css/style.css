@@ -88,7 +88,7 @@ a:hover {
 
 .slider_and_newariv.opt2_sldr .mainslider_holder{
     padding: 0;
-}   
+}
 
 .slider_and_newariv.opt2_sldr .slider_content{
     display: flex;
@@ -146,7 +146,7 @@ p{
 .header_right{
     display: flex;
     flex-grow: 1;
-    justify-content: flex-end;  
+    justify-content: flex-end;
 }
 
 .header_logo {
@@ -414,7 +414,7 @@ span.menu_icn {
 
 .rsp_srch_bx_hldr .form-control{
     border-radius: 50px 0 0 50px;
-    padding: 0 0 0 25px;    
+    padding: 0 0 0 25px;
     background: #fff;
     border: none;
 }
@@ -424,12 +424,12 @@ span.menu_icn {
     background: #ff8202;
     border: none;
     padding: 0 30px;
-    border-radius: 0 50px 50px 0; 
+    border-radius: 0 50px 50px 0;
 }
 
 
-.resp_srch{  
-    display: none;  
+.resp_srch{
+    display: none;
 }
 
 .clk_rsp_srch{
@@ -494,7 +494,7 @@ span.menu_bar:after{
 
 
 .mb_slide_meu {
-    width: 300px;    
+    width: 300px;
     background-color: #fafafa;
     position: fixed;
     z-index: 999;
@@ -604,7 +604,7 @@ transform: rotate(180deg);
 .mb_slide_menu_cntnts{
     position: relative;
     z-index: 1;
-    background-color: #fafafa;  
+    background-color: #fafafa;
 }
 
 .logo_sld_mnu {
@@ -622,7 +622,7 @@ header.main_header {
     position: fixed;
     background: #fff;
     width: 100%;
-    top: 0;    
+    top: 0;
     z-index: 9;
 }
 /* header css */
@@ -774,7 +774,7 @@ section.offers_ads {
 
 /* carousel sliding items css */
 .brdr_bx{
-    border: 1px solid #eee;    
+    border: 1px solid #eee;
     padding: 0 0 30px 0;
 }
 
@@ -805,7 +805,7 @@ section.offers_ads {
     padding: 6px 15px;
     border-radius: 5px;
     text-transform: uppercase;
-    font-weight: 500;   
+    font-weight: 500;
 }
 
 section.caro_products {
@@ -813,18 +813,18 @@ section.caro_products {
 }
 
 .prd_infos h3{
-    font-size: 14px;    
+    font-size: 14px;
     font-weight: 400;
     min-height: 32px;
 }
 
 .prd_infos .price_new{
-    color: #ff8202;    
+    color: #ff8202;
     font-size: 20px;
 }
 
 .list_prd_itm .prd_actions{
-    margin: 20px 0 0 0;     
+    margin: 20px 0 0 0;
     display: flex;
     justify-content: center;
 }
@@ -845,7 +845,7 @@ section.caro_products {
     background: #e6e5e5;
     border: none;
     padding: 5px 10px;
-    margin: 0 0 0 15px; 
+    margin: 0 0 0 15px;
 }
 
 .list_prd_itm .prd_actions button.addwhislist:hover{
@@ -865,7 +865,7 @@ section.caro_products {
 }
 
 .itms_caro .owl-nav button{
-    margin: 0 0 0 5px;  
+    margin: 0 0 0 5px;
 }
 .itms_caro .owl-nav button .fa{
     background: #f5f5f5;
@@ -883,7 +883,7 @@ section.caro_products {
     padding: 20px;
 }
 
-.thumimg_for_caro{  
+.thumimg_for_caro{
     padding-left: 20px;
 }
 
@@ -906,14 +906,14 @@ section.caro_products {
 
 /* footer css */
 footer{
-    margin: 30px 0 0 0; 
+    margin: 30px 0 0 0;
 }
 .wrap-function-info{
     background: #4b4b4b;
     padding: 30px 0;
 }
 .wrap-function-info .wrap-left-info{
-    
+
 }
 
 .wrap-function-info ul{
@@ -947,7 +947,7 @@ footer{
 
 .newslettersub {
     background: #ff8200;
-    color: #fff;    
+    color: #fff;
     padding: 30px 0;
 }
 
@@ -965,9 +965,9 @@ footer{
 
 .newsltter_from input {
     border-radius: 50px 0px 0px 50px;
-    border: none;    
+    border: none;
     height: 50px;
-    padding: 0 0 0 40px;    
+    padding: 0 0 0 40px;
     background: #fff;
 }
 
@@ -992,7 +992,7 @@ footer{
 }
 
 .continfo h5{
-    
+
 }
 .cont_icn {
     display: flex;
@@ -1029,7 +1029,7 @@ footer{
 
 .footmenus .menusitms ul li{
     display: inline-block;
-    width: 100%;    
+    width: 100%;
     margin: 0 0 10px 0;
 }
 
@@ -1073,7 +1073,7 @@ button.thd_prtysocial_btn{
 }
 button.thd_prtysocial_btn.fb_btn{
     background-color: #385499;
-    color: #FFF;    
+    color: #FFF;
     border: none;
 }
 
@@ -1153,16 +1153,16 @@ button.thd_prtysocial_btn.fb_btn{
     position: relative;
 }
 
-.shop_itm { 
+.shop_itm {
     display: flex;
     height: 100%;
     align-items: center;
-    position: relative;    
+    position: relative;
     margin: 0 0 0 30px;
 }
 
-.dprdwn{   
-    display: none; 
+.dprdwn{
+    display: none;
     position: absolute;
     top: 100%;
     z-index: 99;
@@ -1191,7 +1191,7 @@ button.thd_prtysocial_btn.fb_btn{
     display: flex;
     align-items: center;
     justify-content: space-between;
-    border-top: 1px solid #eaeaea;    
+    border-top: 1px solid #eaeaea;
     padding: 5px 0;
 }
 
@@ -1214,7 +1214,7 @@ button.thd_prtysocial_btn.fb_btn{
 .drp_added_itms_cont_hldr {
     display: flex;
     flex-grow: 1;
-}   
+}
 
 .dlt_drp_added_itm{
     display: flex;
@@ -1299,7 +1299,7 @@ span.drpdwn_hdingtxt {
 
 .pdetails-largeimages{
     /*border: 1px solid #eee;*/
-    margin: 0 0 20px 0; 
+    margin: 0 0 20px 0;
 }
 /*
 .pdetails-thumbs .slick-prev, .pdetails-thumbs .slick-next{
@@ -1331,7 +1331,7 @@ span.drpdwn_hdingtxt {
 }
 .pdetails-thumbs{
     width: 348px;
-    margin: auto;  
+    margin: auto;
 }
 
 .pdetails_details {
@@ -1349,7 +1349,7 @@ span.drpdwn_hdingtxt {
     color: #484848;
     font-size: 18px;
     font-weight: bold;
-    
+
     margin-bottom: 3px;
 }
 
@@ -1415,7 +1415,7 @@ font-size: 35px;
 }
 .pdetails_clr_qty .colors, .pdetails_clr_qty .quanlity{
     width: 144px;
-    display: inline-block;    
+    display: inline-block;
     margin: 0 20px 0 0;
 }
 .pdetails_clr_qty .colors select {
@@ -1435,7 +1435,7 @@ font-size: 35px;
     width: 100%;
     border: none;
     border-radius: 50px;
-    padding: 0 20px; 
+    padding: 0 20px;
 }
 .pdetails_btns {
     margin: 3rem 0;
@@ -1474,7 +1474,7 @@ font-size: 35px;
     margin-bottom: 21px;
     color: #484848;
     font-weight: bold;
-    
+
     font-size: 18px;
 }
 
@@ -1487,7 +1487,7 @@ font-size: 35px;
     font-size: 18px;
     font-weight: bold;
     margin-bottom: 30px;
-    
+
 }
 
 .tecnical-specs table {
@@ -1546,8 +1546,8 @@ font-size: 35px;
     text-align: center;
     background-color: #f92400;
     border-radius: 30px;
-    font-weight: 400;    
-    margin: 20px 0 30px 0;    
+    font-weight: 400;
+    margin: 20px 0 30px 0;
     border: none;
 }
 
@@ -1579,7 +1579,7 @@ font-size: 35px;
     border: none;
     padding-left: 30px;
     box-shadow: 0px 2px 3px 0px rgba(234, 234, 234, 1);
-    width: 100%;    
+    width: 100%;
     padding: 11px 18px;
 }
 
@@ -1609,7 +1609,7 @@ font-size: 35px;
 }
 
 .product_listing .list_prd_itm{
-    padding: 10px 10px 40px 10px;    
+    padding: 10px 10px 40px 10px;
     margin: 0 0 30px 0;
 }
 
@@ -1624,7 +1624,7 @@ font-size: 35px;
 }
 .product_listing .prd_listing_brder{
     border-right: 1px solid #eee;
-    border-bottom: 1px solid #eee;   
+    border-bottom: 1px solid #eee;
 }
 
 .blog-pagination {
@@ -1732,7 +1732,7 @@ ul.flat-pagination.style1 li.prev {
 }
 
 .prd_infos_prcs {
-     display: flex; 
+     display: flex;
     justify-content: center;
     align-items: center;
     height: 31px;
@@ -1758,7 +1758,7 @@ ul.flat-pagination.style1 li.prev {
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
-    align-items: center;    
+    align-items: center;
     background-color: #f5f5f5;
     padding: 20px 50px;
     border-radius: 50px;
@@ -1829,7 +1829,7 @@ button.crt_dlt:hover{
 }
 
 .tbl_prd_qty input, .tbl_prd_qty input.tblqqty{
-    width: 70px;    
+    width: 70px;
     border-radius: 0;
     height: 35px;
     padding: 0;
@@ -2271,7 +2271,7 @@ table.product thead tr th:last-child {
 .sendlnk_bx{
    display: flex;
     align-items: center;
-    height: 100%; 
+    height: 100%;
 }
 
 .sendlnk_bx a{
@@ -2289,11 +2289,11 @@ table.product thead tr th:last-child {
 }
 
 .crt_ad{
-    background: #4b4b4b;    
+    background: #4b4b4b;
     border: none;
     padding: 5px 20px;
     color: #fff;
-    border-radius: 50px;    
+    border-radius: 50px;
     width: 110px;
 }
 
@@ -2317,7 +2317,7 @@ table.product thead tr th:last-child {
 
 .radio_hlf {
     display: flex;
-    align-items: center;    
+    align-items: center;
     margin: 0 20px 0 0;
 }
 
@@ -2450,7 +2450,7 @@ select.multi-select{
 
 .user__infos__profile {
     border: 1px solid #ecebeb;
-    padding: 20px;    
+    padding: 20px;
     margin: 0 0 10px 0;
 }
 
@@ -2469,7 +2469,7 @@ select.multi-select{
 .user__infos__profile .prof__infos__list:last-child{
     border-bottom: none;
     padding: 0;
-    margin: 0;  
+    margin: 0;
 }
 
 .info__text img{
@@ -2539,13 +2539,13 @@ select.multi-select{
 
 .req__item__text__hldr{
     padding: 8px 0;
-    color: #fff;    
+    color: #fff;
     position: relative;
 }
-.req__item{ 
+.req__item{
     background-image: linear-gradient(to right, #5000f1 , #7801e6);
     display: flex;
-    justify-content: center; 
+    justify-content: center;
 }
 .req__item__text__hldr a{
     background: #fff;
@@ -2554,7 +2554,7 @@ select.multi-select{
     margin: 0 0 0 20px;
     padding: 5px 30px;
     border-radius: 50px;
-    position: relative; 
+    position: relative;
 }
 
 .req__item__text__hldr a:hover{
@@ -2701,11 +2701,11 @@ section.contact__frm__sec {
 }
 
 .contact__pg__social ul li.inst__icn a{
-    background: #b604a3;   
+    background: #b604a3;
 }
 
 .contact__pg__social ul li.twt__icn a{
-    background: #289ee9;   
+    background: #289ee9;
 }
 
 .contact__pg__social ul li a:hover{
@@ -2718,7 +2718,7 @@ section.contact__frm__sec {
 
 .info__lst__holder {
     display: flex;
-    align-items: center;    
+    align-items: center;
     margin: 0 0 1rem 0;
 }
 .info__lst__holder:last-child{
@@ -2759,7 +2759,7 @@ section.contact__frm__sec {
     padding: 20px 0 0 20px;
     background: #f3f2f2;
     border: 1px solid transparent;
-} 
+}
 
 .cntmsg__sbt_btn{
     background: #4b4b4b;
@@ -2767,7 +2767,7 @@ section.contact__frm__sec {
     color: #fff;
     width: 50%;
     padding: 10px 0;
-    text-transform: uppercase;    
+    text-transform: uppercase;
     border-radius: 50px;
 }
 
@@ -2780,3 +2780,45 @@ section.contact__frm__sec {
 }
 
 /* contact us page css */
+
+/* list filter css */
+
+.prd__list__filter {
+  margin: 2rem 0 0 0;
+  border-bottom: 1px solid #F1F1F1;
+  padding: 0 0 1rem 0;
+}
+.filter__check label {
+  display: flex;
+  align-items: center;
+  -moz-user-select: none;
+  -khtml-user-select: none;
+  -webkit-user-select: none;
+}
+.filter__check input {
+  width: auto;
+  height: auto;
+  margin: 0 10px 0 0;
+}
+.sidebarheading {
+  margin: 0 0 20px 0;
+}
+.sidebarheading h5 {
+}
+.price__filter input {
+  margin: 0 0 10px 0;
+  height: 40px;
+}
+.price__filter button {
+  background: #FF8200;
+  border: none;
+  color: #fff;
+  width: 100%;
+  height: 40px;
+  border-radius: 50px;
+}
+.price__filter button:hover {
+  background: #333;
+}
+
+/* list filter css */

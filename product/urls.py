@@ -28,7 +28,7 @@ urlpatterns = [
     # view all cart of user
     path('cart/<int:pk>/', views.CartListView.as_view(), name='cart-list'),
     path('cart/add/', views.AddCart.as_view(), name='add-cart'),
-    
+
     # view all favourites of user
     path('favourite/<int:pk>/', views.FavouriteListView.as_view(), name='favourite'),
 
@@ -46,7 +46,7 @@ urlpatterns = [
 
     # prices in nepal urls
     path('laptop/price/nepal/laptop_prices_in_nepal/<slug:brand_name>', views.LaptopPriceListView.as_view(), name='laptop-price-in-nepal'),
-    
+
     path('contact', views.ContactView.as_view(), name="contact"),
 
 ]
