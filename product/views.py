@@ -10,6 +10,9 @@ from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.db.models import Q
 from django.template import RequestContext
+import smtplib
+from email.mime.text import MIMEText
+from email.mime.multipart import MIMEMultipart
 
 
 def handler404(request, *args, **argv):
@@ -649,11 +652,31 @@ class OrderView(LoginRequiredMixin, CreateView):
 
         Cart.objects.filter(user_id=self.request.user.pk).update(removed=True)
 
-        from_email = settings.EMAIL_HOST_USER
-        subject = "Order Placed"
-        message = "An order has been placed by " + first_name + " " + last_name + ". Contact Details: email= " + email + " contact number= " + contact + " ."
-        receipent_email = ['saneprijal@gmail.com', ]
-        send_mail(subject, message, from_email, receipent_email)
+        to_email = "saneprijal@gmail.com"
+        domain = settings.SITE_URL
+        msg = MIMEMultipart('alternative')
+        msg['Subject'] = "Order Placed"
+        msg['From'] = settings.EMAIL_HOST_USER
+        msg['To'] = to_email
+
+        html = """
+            <html>
+                <head></head>
+                <body>
+                    A new order has been placed by """+ first_name + """ """ + last_name +"""
+                    Please click on the link to view the order,
+                    """ + domain + """/dashboard/order/detail/"""+ order.id +"""/
+                </body>
+            </html>
+        """
+
+        html_part = MIMEText(html, 'html')
+        msg.attach(html_part)
+
+        server = smtplib.SMTP_SSL(settings.EMAIL_HOST, settings.EMAIL_PORT)
+        server.login(settings.EMAIL_HOST_USER, settings.EMAIL_HOST_PASSWORD)
+        server.sendmail(settings.EMAIL_HOST_USER, [to_email, ], msg.as_string())
+        server.quit()
 
         return render(request, 'product/success_order.html')
 
