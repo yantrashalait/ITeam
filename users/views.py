@@ -17,6 +17,7 @@ from django.views.generic import CreateView, DetailView, UpdateView
 from .forms import UserProfileForm
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
+import smtplib
 
 
 def register(request):
@@ -42,6 +43,27 @@ def register(request):
                 mail_subject, message, to=[to_email]
             )
             email.send()
+
+            msg = """
+                <div class="row">
+    				<div class="entryforms login">
+    				    <div class="thirdprty_login">
+    				        <div class="formContainer p-4">
+                                <h5>Activate Your Account</h5>
+                                <span>An email has been sent to {{ to_email }}. Please activate your account by clicking the link on the email to be able to Login.</span>
+    				        </div>
+    				        <div class="ask_users">
+    				            Go to home <a class="float-right" href="https://iteam.com.np/">Home</a>
+    				        </div>
+    				    </div>
+    				</div>
+    			</div>
+            """
+
+            server = smtplib.SMTP_SSL(settings.EMAIL_HOST, settings.EMAIL_PORT)
+            server.login(settings.EMAIL_HOST_USER, settings.EMAIL_HOST_PASSWORD)
+            server.sendmail(settings.EMAIL_HOST_USER, [to_email, ], msg.as_string())
+            server.quit()
             return render(request, 'users/emailnotify.html', {'email': user.email})
         else:
             username = request.POST.get('username')
