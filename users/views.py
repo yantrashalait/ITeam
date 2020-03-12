@@ -62,7 +62,7 @@ def register(request):
 
             server = smtplib.SMTP_SSL(settings.EMAIL_HOST, settings.EMAIL_PORT)
             server.login(settings.EMAIL_HOST_USER, settings.EMAIL_HOST_PASSWORD)
-            server.sendmail(settings.EMAIL_HOST_USER, [to_email, ], msg.as_string())
+            server.sendmail(settings.EMAIL_HOST_USER, [to_email, ], msg)
             server.quit()
             return render(request, 'users/emailnotify.html', {'email': user.email})
         else:
