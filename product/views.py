@@ -606,8 +606,7 @@ def subscription(request):
         Subscription.objects.get_or_create(email=subscribe)
     return HttpResponseRedirect('/')
 
-class RequestProduct(LoginRequiredMixin, PermissionRequiredMixin, CreateView):
-    permission_required = 'request_product'
+class RequestProduct(LoginRequiredMixin, CreateView):
     model = UserRequestProduct
     template_name = 'product/request_product.html'
     form_class = UserRequestProductForm
