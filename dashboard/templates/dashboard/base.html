@@ -189,7 +189,7 @@
                                                         <ul class="notification-menu">
                                                             {% for item in header_orders %}
                                                             <li>
-                                                                <a href="#">
+                                                                <a href="{% url 'dashboard:order_detail' item.pk %}">
                                                                     <div class="notification-icon">
                                                                         <img src="{{ item.user.user_profile.image.url }}">
                                                                     </div>

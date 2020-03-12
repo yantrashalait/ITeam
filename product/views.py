@@ -619,6 +619,9 @@ class RequestProduct(LoginRequiredMixin, PermissionRequiredMixin, CreateView):
     def get_success_url(self):
         return reverse('product:index')
 
+from django.core.mail import send_mail
+
+
 class OrderView(LoginRequiredMixin, CreateView):
     template_name = 'product/order.html'
     form_class = UserOrderForm
@@ -646,6 +649,12 @@ class OrderView(LoginRequiredMixin, CreateView):
             order.cart.add(item)
 
         Cart.objects.filter(user_id=self.request.user.pk).update(removed=True)
+
+        from_email = settings.EMAIL_HOST_USER
+        subject = "Order Placed"
+        message = "An order has been placed by " + first_name + " " + last_name + ". Contact Details: email= " + email + " contact number= " + contact + " ."
+        receipent_email = ['saneprijal@gmail.com', ]
+        send_mail(subject, message, from_email, receipent_email)
 
         return render(request, 'product/success_order.html')
 

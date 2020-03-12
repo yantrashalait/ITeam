@@ -58,6 +58,9 @@ class DashboardView(LoginRequiredMixin, PermissionRequiredMixin, ListView):
     context_object_name = 'product'
     paginate_by = 10
 
+    def get_queryset(self, *args, **kwargs):
+        return Product.objects.all().order_by('-id')
+
 class ProductList(LoginRequiredMixin, PermissionRequiredMixin, ListView):
     permission_required = 'add_product'
     template_name = 'dashboard/product-list.html'
@@ -65,6 +68,8 @@ class ProductList(LoginRequiredMixin, PermissionRequiredMixin, ListView):
     context_object_name = 'product'
     paginate_by = 10
 
+    def get_queryset(self, *args, **kwargs):
+        return Product.objects.all().order_by('-id')
 
 @login_required
 def newBrand(request, *args, **kwargs):
@@ -451,6 +456,9 @@ class OrderList(LoginRequiredMixin, PermissionRequiredMixin, ListView):
         context['requests'] = requests
         context['bargains'] = bargains
         return context
+
+    def get_queryset(self, *args, **kwargs):
+        return UserOrder.objects.all().order_by('-date')
 
 
 class OrderDetail(LoginRequiredMixin, PermissionRequiredMixin, TemplateView):
