@@ -664,7 +664,7 @@ class OrderView(LoginRequiredMixin, CreateView):
             <html>
                 <head></head>
                 <body>
-                    A new order has been placed by """+ first_name + """ """ + last_name +"""
+                    A new order has been placed by """+ first_name + """ """ + last_name +""".<br>
                     Please click on the link to view the order,
                     """ + domain + """/dashboard/order/detail/"""+ str(order.id) +"""/
                 </body>
