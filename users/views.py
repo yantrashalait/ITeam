@@ -60,7 +60,7 @@ def register(request):
                     <body>
                         Hi """+ user.username +""",
                         Please click on the link to confirm your registration,
-                        https://""" + domain + """/activate/"""+ uid +"""/"""+ token +"""/
+                        """ + domain + """/user/activate/"""+ uid +"""/"""+ token +"""/
                     </body>
                 </html>
             """
