@@ -653,7 +653,7 @@ class OrderView(LoginRequiredMixin, CreateView):
 
         Cart.objects.filter(user_id=self.request.user.pk).update(removed=True)
 
-        to_email = "saneprijal@gmail.com"
+        to_email = "iteam71@gmail.com"
         domain = settings.SITE_URL
         msg = MIMEMultipart('alternative')
         msg['Subject'] = "Order Placed"
