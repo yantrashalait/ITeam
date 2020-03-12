@@ -18,6 +18,8 @@ from .forms import UserProfileForm
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
 import smtplib
+from email.mime.text import MIMEText
+from email.mime.multipart import MIMEMultipart
 
 
 def register(request):
@@ -30,39 +32,42 @@ def register(request):
             user.is_active = False
             user.save()
 
-            mail_subject = 'Activate your account.'
-            current_site = get_current_site(request)
-            message = render_to_string('users/acc_active_email.html', {
-                'user': user,
-                'domain': settings.SITE_URL,
-                'uid': urlsafe_base64_encode(force_bytes(user.pk)),
-                'token': account_activation_token.make_token(user),
-            })
+            # mail_subject = 'Activate your account.'
+            # current_site = get_current_site(request)
+            # message = render_to_string('users/acc_active_email.html', {
+            #     'user': user,
+            #     'domain': settings.SITE_URL,
+            #     'uid': urlsafe_base64_encode(force_bytes(user.pk)),
+            #     'token': account_activation_token.make_token(user),
+            # })
             to_email = form.cleaned_data.get('email')
-            email = EmailMessage(
-                mail_subject, message, to=[to_email]
-            )
-            email.send()
+            # email = EmailMessage(
+            #     mail_subject, message, to=[to_email]
+            # )
+            # email.send()
 
-            msg = """
-                <div class="row">
-    				<div class="entryforms login">
-    				    <div class="thirdprty_login">
-    				        <div class="formContainer p-4">
-                                <h5>Activate Your Account</h5>
-                                <span>An email has been sent to {{ to_email }}. Please activate your account by clicking the link on the email to be able to Login.</span>
-    				        </div>
-    				        <div class="ask_users">
-    				            Go to home <a class="float-right" href="https://iteam.com.np/">Home</a>
-    				        </div>
-    				    </div>
-    				</div>
-    			</div>
+            msg = MIMEMultipart('alternative')
+            msg['Subject'] = "Activate Account"
+            msg['From'] = settings.EMAIL_HOST_USER
+            msg['To'] = to_email
+
+            html = """
+                <html>
+                    <head></head>
+                    <body>
+                        Hi """+ user.username +""",
+                        Please click on the link to confirm your registration,
+                        https://{{domain}}{% url 'users:activate' uidb64=uid token=token %}
+                    </body>
+                </html>
             """
+
+            html_part = MIMEText(html, 'html')
+            msg.attach(html_part)
 
             server = smtplib.SMTP_SSL(settings.EMAIL_HOST, settings.EMAIL_PORT)
             server.login(settings.EMAIL_HOST_USER, settings.EMAIL_HOST_PASSWORD)
-            server.sendmail(settings.EMAIL_HOST_USER, [to_email, ], msg)
+            server.sendmail(settings.EMAIL_HOST_USER, [to_email, ], msg.as_string())
             server.quit()
             return render(request, 'users/emailnotify.html', {'email': user.email})
         else:
