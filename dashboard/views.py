@@ -451,7 +451,7 @@ class OrderList(LoginRequiredMixin, PermissionRequiredMixin, ListView):
 
     def get_context_data(self, *args, **kwargs):
         context = super(OrderList, self).get_context_data(**kwargs)
-        requests = UserRequestProduct.objects.filter(active=True)
+        requests = UserRequestProduct.objects.filter(active=True).order_by('-date')
         bargains = UserBargain.objects.all()
         context['requests'] = requests
         context['bargains'] = bargains
