@@ -41,6 +41,9 @@ def register(request):
             #     'token': account_activation_token.make_token(user),
             # })
             to_email = form.cleaned_data.get('email')
+            domain = settings.SITE_URL
+            uid = urlsafe_base64_encode(force_bytes(user.pk))
+            token = account_activation_token.make_token(user)
             # email = EmailMessage(
             #     mail_subject, message, to=[to_email]
             # )
@@ -57,7 +60,7 @@ def register(request):
                     <body>
                         Hi """+ user.username +""",
                         Please click on the link to confirm your registration,
-                        https://{{domain}}{% url 'users:activate' uidb64=uid token=token %}
+                        https://""" + domain + """/activate/"""+ uid +"""/"""+ token +"""/
                     </body>
                 </html>
             """
