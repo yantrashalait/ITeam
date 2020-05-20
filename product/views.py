@@ -117,7 +117,7 @@ class ProductList(ListView):
     template_name = 'product/product-list.html'
     model = Product
     context_object_name = 'product'
-    paginate_by = 10
+    paginate_by = 18
     queryset = Product.objects.filter(visibility=True)
 
     # def get_queryset(self):
@@ -224,7 +224,7 @@ class CategoryListView(ListView):
     template_name = 'product/product-list.html'
     model = Product
     context_object_name = 'product'
-    paginate_by = 20
+    paginate_by = 18
 
     def get_queryset(self, *args, **kwargs):
         brands = self.request.GET.getlist('brands')
@@ -291,7 +291,7 @@ class BrandListView(ListView):
     template_name = 'product/product-list.html'
     model = Product
     context_object_name = 'product'
-    paginate_by = 20
+    paginate_by = 18
 
     def get_queryset(self, *args, **kwargs):
         types = self.request.GET.getlist('types')
@@ -341,7 +341,7 @@ class TypeListView(ListView):
     template_name = 'product/product-list.html'
     model = Product
     context_object_name = 'product'
-    paginate_by = 20
+    paginate_by = 18
 
     def get_queryset(self, *args, **kwargs):
         brands = self.request.GET.getlist('brands')
@@ -391,7 +391,7 @@ class SuperDealsListView(ListView):
     template_name = 'product/product-list.html'
     model = Product
     context_object_name = 'product'
-    paginate_by = 20
+    paginate_by = 18
 
     def get_queryset(self, *args, **kwargs):
         brands = self.request.GET.getlist('brands')
@@ -458,7 +458,7 @@ class OfferListView(ListView):
     template_name = 'product/product-list.html'
     model = Product
     context_object_name = 'product'
-    paginate_by = 20
+    paginate_by = 18
 
     def get_queryset(self, *args, **kwargs):
         brands = self.request.GET.getlist('brands')
@@ -525,7 +525,7 @@ class MostViewedListView(ListView):
     template_name = 'product/product-list.html'
     model = Product
     context_object_name = 'product'
-    paginate_by = 20
+    paginate_by = 18
 
     def get_queryset(self, *args, **kwargs):
         brands = self.request.GET.getlist('brands')
@@ -686,7 +686,7 @@ class LaptopPriceListView(ListView):
     template_name = 'product/product-list.html'
     context_object_name = 'product'
     model = Product
-    paginate_by = 20
+    paginate_by = 18
 
     def get_queryset(self, *args, **kwargs):
         brand_name = self.kwargs.get('brand_name')
