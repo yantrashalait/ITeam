@@ -72,4 +72,14 @@ urlpatterns = [
     path('product/<int:product_id>/specification/<int:pk>/delete/', views.ProductSpecificationDelete.as_view(), name="product-specification-delete"),
     # path('product/<int:product_id>/specification/<int:pk>/edit', views.ProductSpecificationEdit.as_view(), name="product-specification-edit"),
 
+    path('add/category/', views.newCategory, name="category"),
+    path('assembly-component/create', views.AssemblyComponentCreate.as_view(), name="assembly-component-create"),
+    path('assembly-component/list', views.AssemblyComponentList.as_view(), name="assembly-component-list"),
+    path('assembly-component/<int:pk>/edit', views.AssemblyComponentEdit.as_view(), name="assembly-component-edit"),
+    path('assembly-component/<int:pk>/delete', views.AssemblyComponentDelete.as_view(), name="assembly-component-delete"),
+
+    path('accessory/create', views.AccessoryCreate.as_view(), name="accessory-create"),
+    path('accessory/list', views.AccessoryList.as_view(), name="accessory-list"),
+    path('accessory/<int:pk>/edit', views.AccessoryEdit.as_view(), name="accessory-edit"),
+    path('accessory/<int:pk>/delete', views.AccessoryDelete.as_view(), name="accessory-delete"),
 ]

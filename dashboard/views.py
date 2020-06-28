@@ -1,19 +1,20 @@
 from django.shortcuts import render, get_object_or_404, render_to_response
 from django.http import HttpResponseRedirect, HttpResponse
 from django.views.generic import ListView, DetailView, CreateView, DeleteView, UpdateView, TemplateView
-from product.models import Category, Brand, Type, Product, Notification, WaitList, Favourite, BannerImage, \
-    SuperImage, OfferImage, UserBargain, UserRequestProduct, UserOrder, SpecificationTitle, AboutITeam, Cart, \
-    SpecificationContent, ProductImage, ProductSpecification
-from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
-from .forms import ProductForm, ProductImageForm, ProductSpecificationFormset, ProductImageFormset, \
-    CategoryForm, BannerImageForm, BrandForm, TypeForm, SuperImageForm, OfferImageForm, \
-        SpecificationContentFormset, SpecificationTitleForm, SpecificationContentForm, AboutForm
 from django.urls import reverse
 from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
 from django.contrib.auth.decorators import login_required
 from django.utils.html import escape
-from django.template import RequestContext
 from django.db import transaction
+
+from product.models import Category, Brand, Type, Product, Notification, WaitList, Favourite, BannerImage, \
+    SuperImage, OfferImage, UserBargain, UserRequestProduct, UserOrder, SpecificationTitle, AboutITeam, Cart, \
+    SpecificationContent, ProductImage, ProductSpecification
+from .forms import ProductForm, ProductImageForm, ProductSpecificationFormset, ProductImageFormset, \
+    CategoryForm, BannerImageForm, BrandForm, TypeForm, SuperImageForm, OfferImageForm, \
+    SpecificationContentFormset, SpecificationTitleForm, SpecificationContentForm, AboutForm
+from assembly.models import AssemblyComponent, Accessory
+from assembly.forms import AssemblyComponentForm, AccessoryForm
 
 
 def handlePopAdd(request, addForm, field):
@@ -51,6 +52,26 @@ def brandPopAdd(request, addForm, field):
         form = addForm()
     return render(request, "add/brand-popadd.html", {'form': form, 'field': field})
 
+
+def categoryPopAdd(request, addForm, field):
+    if request.method == "POST":
+        form = addForm(request.POST)
+        print(form)
+        if form.is_valid():
+            try:
+                newObject = form.save()
+            except form.ValidationError:
+                newObject = None
+            if newObject:
+                return HttpResponse('<script type="text/javascript">opener.dismissAddAnotherPopup(window, "%s", "%s");</script>' % (escape(newObject._get_pk_val()), escape(newObject)))
+        else:
+            print('not valid')
+            print(form.errors)
+    else:
+        form = addForm()
+    return render(request, "add/category-popadd.html", {'form': form, 'field': field})
+
+
 class DashboardView(LoginRequiredMixin, PermissionRequiredMixin, ListView):
     permission_required = 'add_product'
     template_name = 'dashboard/product-list.html'
@@ -60,6 +81,7 @@ class DashboardView(LoginRequiredMixin, PermissionRequiredMixin, ListView):
 
     def get_queryset(self, *args, **kwargs):
         return Product.objects.all().order_by('-id')
+
 
 class ProductList(LoginRequiredMixin, PermissionRequiredMixin, ListView):
     permission_required = 'add_product'
@@ -71,6 +93,7 @@ class ProductList(LoginRequiredMixin, PermissionRequiredMixin, ListView):
     def get_queryset(self, *args, **kwargs):
         return Product.objects.all().order_by('-id')
 
+
 @login_required
 def newBrand(request, *args, **kwargs):
     return brandPopAdd(request, BrandForm, "brand")
@@ -79,6 +102,11 @@ def newBrand(request, *args, **kwargs):
 @login_required
 def newType(request, *args, **kwargs):
     return handlePopAdd(request, TypeForm, "product_type")
+
+
+@login_required
+def newCategory(request, *args, **kwargs):
+    return categoryPopAdd(request, AssemblyComponentForm, "category")
 
 
 class ProductCreate(LoginRequiredMixin, PermissionRequiredMixin, CreateView):
@@ -330,11 +358,13 @@ class BannerCreate(LoginRequiredMixin, PermissionRequiredMixin, CreateView):
         print(form.cleaned_data)
         return super().form_valid(form)
 
+
 class BannerDelete(LoginRequiredMixin, PermissionRequiredMixin, DeleteView):
     permission_required = 'delete_banner'
     model = BannerImage
     template_name = 'dashboard/banner_confirm_delete.html'
     success_url = "/dashboard/banner/list"
+
 
 class BannerUpdate(LoginRequiredMixin, PermissionRequiredMixin, UpdateView):
     permission_required = 'change_bannerimage'
@@ -649,3 +679,77 @@ class ProductSpecificationDelete(LoginRequiredMixin, PermissionRequiredMixin, De
 
     def get_success_url(self, *args, **kwargs):
         return reverse('dashboard:product-specification-list', kwargs={'pk': self.kwargs.get('product_id')})
+
+
+class AssemblyComponentCreate(LoginRequiredMixin, PermissionRequiredMixin, CreateView):
+    permission_required = 'add_product'
+    template_name = 'dashboard/assembly_component_form.html'
+    model = AssemblyComponent
+    form_class = AssemblyComponentForm
+
+    def get_success_url(self):
+        return reverse('dashboard:assembly-component-list')
+
+
+class AssemblyComponentList(LoginRequiredMixin, PermissionRequiredMixin, ListView):
+    permission_required = "add_product"
+    template_name = "dashboard/assembly_component_list.html"
+    model = AssemblyComponent
+    paginate_by = 10
+    context_object_name = "components"
+
+
+class AssemblyComponentEdit(LoginRequiredMixin, PermissionRequiredMixin, UpdateView):
+    permission_required = "add_product"
+    template_name = "dashboard/assembly_component_form.html"
+    model = AssemblyComponent
+    form_class = AssemblyComponentForm
+
+    def get_object(self, queryset=None):
+        _id = self.kwargs.get('pk', 1)
+        return get_object_or_404(self.model, pk=_id)
+
+    def get_success_url(self):
+        return reverse("dashboard:assembly-component-list")
+
+
+class AssemblyComponentDelete(LoginRequiredMixin, PermissionRequiredMixin, DeleteView):
+    permission_required = "add_product"
+    template_name = "dashboard/assembly_component_delete.html"
+    model = AssemblyComponent
+    success_url = "/dashboard/assembly-component/list"
+
+
+class AccessoryCreate(LoginRequiredMixin, PermissionRequiredMixin, CreateView):
+    permission_required = 'add_product'
+    template_name = "dashboard/accessory-form.html"
+    model = Accessory
+    form_class = AccessoryForm
+
+    def get_success_url(self):
+        return reverse('dashboard:accessory-list')
+
+
+class AccessoryList(LoginRequiredMixin, PermissionRequiredMixin, ListView):
+    permission_required = "add_product"
+    template_name = "dashboard/accessory-list.html"
+    model = Accessory
+    paginate_by = 10
+    context_object_name = "accessories"
+
+
+class AccessoryEdit(LoginRequiredMixin, PermissionRequiredMixin, UpdateView):
+    permission_required = "add_product"
+    template_name = "dashboard/accessory-form.html"
+    model = Accessory
+    form_class = AccessoryForm
+
+    def get_success_url(self):
+        return reverse("dashboard:accessory-list")
+
+
+class AccessoryDelete(LoginRequiredMixin, PermissionRequiredMixin, DeleteView):
+    permission_required = "add_product"
+    template_name = "dashboard/accessory-delete.html"
+    model = Accessory
+    success_url = "/dashboard/accessory/list"

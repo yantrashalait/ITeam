@@ -150,6 +150,7 @@ class ProductDetail(DetailView):
 
 class AddCart(LoginRequiredMixin, CreateView):
     form_class = CartForm
+    template_name = "product/cart.html"
 
     def post(self, request, *args, **kwargs):
         color = request.POST.get("color")
@@ -157,10 +158,10 @@ class AddCart(LoginRequiredMixin, CreateView):
         product_id = request.POST.get("product")
         product = Product.objects.get(id=int(product_id), visibility=True)
         cart = Cart()
-        cart.amount=quantity
+        cart.amount = quantity
         cart.total_price = int(product.new_price)*quantity
-        cart.user=request.user
-        cart.product=product
+        cart.user = request.user
+        cart.product = product
         cart.save()
         return HttpResponseRedirect(reverse('product:cart-list', kwargs={'pk': request.user.pk}))
 
@@ -204,6 +205,7 @@ def add_to_waitlist(request, *args, **kwargs):
             return HttpResponse({'message': 'Added Failed'})
     else:
         return HttpResponseRedirect('login')
+
 
 @login_required(login_url='/login/')
 def add_to_bargain(request, *args, **kwargs):
@@ -604,11 +606,13 @@ def search_product(request):
 
     return render (request, 'product/product-list.html')
 
+
 def subscription(request):
     if request.method=='POST':
         subscribe = request.POST.get('subs')
         Subscription.objects.get_or_create(email=subscribe)
     return HttpResponseRedirect('/')
+
 
 class RequestProduct(LoginRequiredMixin, CreateView):
     model = UserRequestProduct
@@ -700,3 +704,4 @@ class ContactView(TemplateView):
     def get_context_data(self, *args, **kwargs):
         context = super(ContactView, self).get_context_data(**kwargs)
         context['about'] = AboutITeam.objects.last()
+

@@ -108,6 +108,15 @@
                                 <li><a title="Add Departments" href="{% url 'dashboard:offerimage-create' %}"><span class="mini-sub-pro">Add Offer Image</span></a></li>
                             </ul>
                         </li>
+                        <li id="assembly-nav">
+                            <a class="has-arrow" href="{% url 'dashboard:assembly-component-list' %}" aria-expanded="false"><span class="mini-click-non">Assembly Section</span></a>
+                            <ul class="submenu-angle" aria-expanded="false">
+                                <li><a title="Departments List" href="{% url 'dashboard:assembly-component-list' %}"><span class="mini-sub-pro">All Components</span></a></li>
+                                <li><a title="Add Departments" href="{% url 'dashboard:assembly-component-create' %}"><span class="mini-sub-pro">Add Component</span></a></li>
+                                <li><a title="Add Departments" href="{% url 'dashboard:accessory-create' %}"><span class="mini-sub-pro">Add Accessory</span></a></li>
+                                <li><a title="Add Departments" href="{% url 'dashboard:accessory-list' %}"><span class="mini-sub-pro">All Accessories</span></a></li>
+                            </ul>
+                        </li>
                     </ul>
                 </nav>
             </div>
@@ -292,6 +301,14 @@
                                             </ul>
                                         </li>
                                         <li><a data-toggle="collapse" data-target="#demodepart" href="{% url 'dashboard:offerimage-list' %}">Offer Images <span class="admin-project-icon edu-icon edu-down-arrow"></span></a>
+                                            <ul id="demodepart" class="collapse dropdown-header-top">
+                                                <li><a href="{% url 'dashboard:offerimage-list' %}">All Offer Images </a>
+                                                </li>
+                                                <li><a href="{% url 'dashboard:offerimage-create' %}">Add Offer Images</a>
+                                                </li>
+                                            </ul>
+                                        </li>
+                                        <li><a data-toggle="collapse" data-target="#demodepart" href="{% url 'dashboard:assembly-component-list' %}">Offer Images <span class="admin-project-icon edu-icon edu-down-arrow"></span></a>
                                             <ul id="demodepart" class="collapse dropdown-header-top">
                                                 <li><a href="{% url 'dashboard:offerimage-list' %}">All Offer Images </a>
                                                 </li>

@@ -1,0 +1,161 @@
+{% extends 'dashboard/base.html' %}
+{% load static %}
+{% load widget_tweaks %}
+{% block content %}
+        <div class="single-pro-review-area mt-t-30 mg-b-15">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                        <div class="product-payment-inner-st">
+                            <div id="myTabContent" class="tab-content custom-product-edit">
+                                <div class="product-tab-list tab-pane fade active in" id="description">
+                                    <div class="row">
+                                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                            <div class="review-content-section">
+                                                <div id="dropzone1" class="pro-ad">
+                                                    <form action="{% if not form.instance.pk %}{% url 'dashboard:accessory-create' %}{% endif %}" method="POST" enctype="multipart/form-data" class="dropzone dropzone-custom needsclick add-professors" id="demo1-upload">
+                                                        {% csrf_token %}
+                                                        <div class="row">
+                                                            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                                                                <div class="form-group">
+                                                                    <label>Accessory Component Type*</label>
+                                                                    {{ form.category|add_class:"form-control" }}
+                                                                </div>
+                                                                <div class="form-group">
+                                                                    <label>Name*</label>
+                                                                    {{ form.name|add_class:"form-control" }}
+                                                                </div>
+                                                                <div class="form-group">
+                                                                    <label>Old price*</label>
+                                                                    {{ form.old_price|add_class:"form-control" }}
+                                                                </div>
+                                                                <div class="form-group">
+                                                                    <label>New price*</label>
+                                                                    {{ form.new_price|add_class:"form-control" }}
+                                                                </div>
+                                                                <div class="form-group">
+                                                                    <label>Is this product available?</label>
+                                                                    {{ form.availability|add_class:"form-control" }}
+                                                                </div>
+                                                                <div class="form-group">
+                                                                    <label>Make this product visible for everyone?</label>
+                                                                    {{ form.visibility|add_class:"form-control" }}
+                                                                </div>
+                                                                <div class="form-group">
+                                                                    <label>Use this product for assembly?</label>
+                                                                    {{ form.use_in_assembly|add_class:"form-control" }}
+                                                                </div>
+                                                                <div class="form-group">
+                                                                    <label>Image</label>
+                                                                    {{ form.image|add_class:"form-control" }}
+                                                                    {{ form.image.help_text }}
+                                                                </div>
+                                                                {{ form.x }}
+                                                                {{ form.y }}
+                                                                {{ form.width }}
+                                                                {{ form.height }}
+                                                            </div>
+                                                        </div>
+                                                        <div class="row">
+                                                            <div class="col-lg-12">
+                                                                <div class="payment-adress">
+                                                                    <button type="submit" class="btn btn-primary waves-effect waves-light">Submit</button>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </form>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal fade" id="modalCrop">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+                <h4 class="modal-title">Crop the photo</h4>
+              </div>
+              <div class="modal-body">
+                <img src="" id="image" style="max-width: 100%;">
+              </div>
+              <div class="modal-footer">
+                <div class="btn-group pull-left" role="group">
+                  <button type="button" class="btn btn-default js-zoom-in">
+                    <span class="glyphicon glyphicon-zoom-in"></span>
+                  </button>
+                  <button type="button" class="btn btn-default js-zoom-out">
+                    <span class="glyphicon glyphicon-zoom-out"></span>
+                  </button>
+                </div>
+                <button type="button" class="btn btn-default" data-dismiss="modal">Nevermind</button>
+                <button type="button" class="btn btn-primary js-crop-and-upload">Crop</button>
+              </div>
+            </div>
+          </div>
+        </div>
+        {% endblock %}
+        {% block scripts %}
+        <script>
+          $("#brand-nav").addClass('active');
+          $("#brand-nav ul").addClass('show');
+        </script>
+        <script src="{% static 'dashboard/js/cropper/cropper.min.js' %}"></script>
+        <script type="text/javascript" src="/static/admin/js/admin/RelatedObjectLookups.js"></script>
+        <script>
+          $(function () {
+            /* SCRIPT TO OPEN THE MODAL WITH THE PREVIEW */
+            $("#id_image").change(function () {
+              if (this.files && this.files[0]) {
+                var reader = new FileReader();
+                reader.onload = function (e) {
+                  $("#image").attr("src", e.target.result);
+                  $("#modalCrop").modal("show");
+                }
+                reader.readAsDataURL(this.files[0]);
+              }
+            });
+            /* SCRIPTS TO HANDLE THE CROPPER BOX */
+            var $image = $("#image");
+            var cropBoxData;
+            var canvasData;
+            $("#modalCrop").on("shown.bs.modal", function () {
+              $image.cropper({
+                viewMode: 1,
+                aspectRatio: 2/2.2,
+                ready: function () {
+                  $image.cropper("setCanvasData", canvasData);
+                  $image.cropper("setCropBoxData", cropBoxData);
+                }
+              });
+            }).on("hidden.bs.modal", function () {
+              cropBoxData = $image.cropper("getCropBoxData");
+              canvasData = $image.cropper("getCanvasData");
+              $image.cropper("destroy");
+            });
+            $(".js-zoom-in").click(function () {
+              $image.cropper("zoom", 0.1);
+            });
+            $(".js-zoom-out").click(function () {
+              $image.cropper("zoom", -0.1);
+            });
+            /* SCRIPT TO COLLECT THE DATA AND POST TO THE SERVER */
+            $(".js-crop-and-upload").click(function () {
+              var cropData = $image.cropper("getData");
+              $("#id_x").val(cropData["x"]);
+              $("#id_y").val(cropData["y"]);
+              $("#id_height").val(cropData["height"]);
+              $("#id_width").val(cropData["width"]);
+              $("#modalCrop").modal("hide");
+            });
+          });
+        </script>
+        {% endblock %}

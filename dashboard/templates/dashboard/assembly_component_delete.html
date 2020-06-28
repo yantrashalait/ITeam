@@ -1,0 +1,28 @@
+{% extends 'dashboard/base.html' %}
+{% block content %}
+    <section class="cartpg">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-8 mx-auto">
+                    <di class="box-checkout">
+                        <div class="checkout-login adprd_heading">
+                            <div class="crt_heading">
+                                <h1>Delete This Component</h1>
+                            </div>
+                        </div>
+                    </di>
+                    <div class="prd_add fields-content">
+                        <form method="POST">
+                            {% csrf_token %}
+                            <p>Do you really want to delete "{{ object }}"</p>
+                            <div class="sbtprd">
+                                <button type="submit">Confirm</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock %}
+
