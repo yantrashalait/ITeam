@@ -112,6 +112,10 @@ class TypeForm(forms.ModelForm):
     class Meta:
         model = Type
         fields = ('brand_type', )
+    
+    def __init__(self, *args, **kwargs):
+        super(TypeForm, self).__init__(**kwargs)
+        self.fields['brand_type'].widget.attrs.update({'class': 'form-control'})
 
 
 class BannerImageForm(forms.ModelForm):
