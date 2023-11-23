@@ -21,7 +21,7 @@ DATABASES = {
 
 from .settings import INSTALLED_APPS
 
-INSTALLED_APPS += ['users', 'product', 'dashboard', 'widget_tweaks']
+INSTALLED_APPS += ['users', 'product', 'dashboard', 'widget_tweaks', 'assembly']
 
 LOGOUT_REDIRECT_URL = '/login/'
 
